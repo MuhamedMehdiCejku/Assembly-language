@@ -1,0 +1,36 @@
+.data
+prompt: .asciiz "Shkruani temperaturën në Celsius: "
+rezultati: .asciiz "Temperatura në Fahrenheit është: "
+
+.text
+main:
+    # Shfaqja e kërkesës
+    li $v0, 4
+    la $a0, prompt
+    syscall
+    
+    # Lexo temperaturën në Celsius
+    li $v0, 5
+    syscall
+    move $t0, $v0 # Ruaj temperaturën në Celsius në $t0
+
+    # Llogaritja e temperaturës në Fahrenheit
+    li $t1, 9
+    mul $t0, $t0, $t1 # Shumëzo Celsius me 9
+    li $t2, 5
+    div $t0, $t0, $t2 # Pjesëtaj Celsius me 5
+    addi $t0, $t0, 32 # Shto 32
+    move $a0, $t0    # Vendos rezultatin në $a0
+
+    # Shfaq rezultatin
+    li $v0, 4
+    la $a0, rezultati
+    syscall
+
+    # Shfaq temperaturën në Fahrenheit
+    li $v0, 1
+    syscall
+
+    # Dal nga programi
+    li $v0, 10
+    syscall
